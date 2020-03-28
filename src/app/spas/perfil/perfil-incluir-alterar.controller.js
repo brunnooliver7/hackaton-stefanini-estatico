@@ -19,7 +19,9 @@ function PerfilIncluirAlterarController($rootScope, $scope, $location,
         descricao: "",
         dataHoraInclusao: "",
         dataHoraAlteracao: ""
-    }
+    };
+    vm.dataInclusao = "";
+    vm.dataAlteracao = "";
 
     vm.init = function () {
        if($routeParams.idPerfil) {
@@ -37,26 +39,24 @@ function PerfilIncluirAlterarController($rootScope, $scope, $location,
             function (response) {
                 if (response.data !== undefined){
                     vm.perfil = response.data;
+                    vm.dataInclusao = vm.formataData(vm.perfil.dataHoraInclusao);
+                    vm.dataAlteracao = vm.formataData(vm.perfil.dataHoraAlteracao);
                 }
             }
         );
     };
 
     vm.incluirAlterarPerfil = function() {
-        if(vm.acao == "Cadastrar"){
-            vm.executarIncluirPerfil();
-        } else if(vm.acao == "Editar") {
-            vm.executarAlterarPerfil();
+        if (vm.acao == "Cadastrar"){
+            vm.incluirPerfil();
+        } else if (vm.acao == "Editar") {
+            vm.alterarPerfil();
         }
     }
     
-    vm.executarIncluirPerfil = function(){
+    vm.incluirPerfil = function() {
         var data  = new Date();
-        // var mes = data.getMonth()+1;
-        // //data.getDate()+ "/"+ mes +"/"+ data.getFullYear() +" - "+ data.getHours() +":"+ data.getMinutes() +":"+ data.getSeconds();
-        // var dataFormatadaJava =  data.getFullYear()+"-"+mes+"-"+data.getDate()+" "+ data.getHours() +":"+ data.getMinutes() +":"+ data.getSeconds();
         vm.perfil.dataHoraInclusao =  data;
-        vm.perfil.dataHoraAlteracao =  data;
         var obj = JSON.stringify(vm.perfil);
         HackatonStefaniniService.incluir(vm.url, obj).then(
             function (response) {
@@ -64,9 +64,14 @@ function PerfilIncluirAlterarController($rootScope, $scope, $location,
                     vm.goToListagem();
             }
         );
+        console.log("Perfil criado");
     }
 
-    vm.executarAlterarPerfil = function(){
+    vm.alterarPerfil = function() {
+        var data = new Date;
+        data = data.toISOString();
+        vm.perfil.dataHoraAlteracao = data;
+        vm.dataAlteracao = vm.formataData(data);
         var obj = JSON.stringify(vm.perfil);
         HackatonStefaniniService.alterar(vm.url, obj).then(
             function (response) {
@@ -85,18 +90,12 @@ function PerfilIncluirAlterarController($rootScope, $scope, $location,
         $location.path("listarPerfis");
     }
 
-    vm.formataDataJava = function(data){
-        var dia = data.slice(0,2);
-        var mes = data.slice(2,4);
-        var ano = data.slice(4,8);
-        return ano+"-"+mes+"-"+dia;
-    }
-
-    vm.formataDataTela = function(data){
+    vm.formataData = function(data) {
         var ano = data.slice(0,4);
         var mes = data.slice(5,7);
         var dia = data.slice(8,10);
-        var dataFormatada = dia+mes+ano;
+
+        var dataFormatada = dia + '/' + mes + '/' + ano;
         return dataFormatada;
     }
 
