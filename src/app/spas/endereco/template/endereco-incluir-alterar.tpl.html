@@ -1,0 +1,109 @@
+<style>
+  .btn-space {
+    margin-right: 10px;
+  }
+
+  myModal {
+    z-index: 2147483647;
+  }
+
+  .disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+</style>
+
+<!-- Inicializar, mostrar tabela -->
+<div ng-init="vm.init()">
+  <div
+    class="container"
+    style="overflow-y: auto; overflow-x: hidden; height: 425px"
+  >
+    <form>
+      <div class="mx-auto" style="width: 200px;">
+        <h5 class="modal-title">Editar Endereço</h5>
+      </div>
+      <div class="form-group">
+        <label for="cepEndereco">CEP:</label>
+        <input 
+          type="nome"
+          class="form-control"
+          id="cepEndereco"
+          ng-model="vm.endereco.cep"
+          placeholder="Digite o CEP do endereço ..."
+        >
+      </div>
+      <div class="form-group">
+        <label for="ufEndereco">UF:</label>
+        <input 
+          type="nome"
+          class="form-control"
+          id="ufEndereco"
+          ng-model="vm.endereco.uf"
+          placeholder="Digite o UF do endereço ..."
+        >
+      </div>
+      <div class="form-group">
+        <label for="localidadeEndereco">Localidade:</label>
+        <input 
+          type="nome"
+          class="form-control"
+          id="localidadeEndereco"
+          ng-model="vm.endereco.localidade"
+          placeholder="Digite o Localidade do endereço ..."
+        >
+      </div>
+      <div class="form-group">
+        <label for="nomeEndereco">Bairro:</label>
+        <input 
+          type="nome"
+          class="form-control"
+          id="bairroEndereco"
+          ng-model="vm.endereco.bairro"
+          placeholder="Digite o Bairro do endereço ..."
+        >
+      </div>
+      <div class="form-group">
+        <label for="complementoEndereco">Complemento:</label>
+        <input 
+          type="nome"
+          class="form-control"
+          id="complementoEndereco"
+          ng-model="vm.endereco.complemento"
+          placeholder="Digite o Complemento do endereço ..."
+        >
+      </div>
+      <div class="form-group">
+        <label for="nomeEndereco">Logradouro:</label>
+        <input 
+          type="nome"
+          class="form-control"
+          id="logradouroEndereco"
+          ng-model="vm.endereco.logradouro"
+          placeholder="Digite o Logradouro do endereço ..."
+        >
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Salvar e Cancelar -->
+<div
+  class="row"
+  style="float: right; padding-top: 30px; padding-right: 20px;"
+>
+  <button
+    type="button"
+    class="btn btn-primary btn-space"
+    ng-click="vm.incluir(vm.endereco)"
+  >
+    Salvar
+  </button>
+  <button 
+    type="button" 
+    class="btn btn-danger" 
+    ng-click="vm.cancelar()"
+  >
+    Cancelar
+  </button>
+</div>

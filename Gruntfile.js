@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         connect: {
             server: {
                 options: {
-                    port: 8300,
+                    port: 8301,
                     // protocol: 'https',
                     base: buildDir,
                     hostname: '*',
@@ -107,7 +107,7 @@ module.exports = function(grunt) {
                 // A porta abaixo deve casar com a porta descrita na página html
                 // //localhost:35729/livereload.js
                 livereload: {
-                    port: 9000,
+                    port: 9001,
                     key: grunt.file.read('ssl/livereload.key'),
                     cert: grunt.file.read('ssl/livereload.crt')
                 }

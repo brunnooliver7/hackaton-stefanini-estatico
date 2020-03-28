@@ -1,0 +1,165 @@
+<style>
+  .btn-space {
+    margin-right: 10px;
+  }
+
+  myModal {
+    z-index: 2147483647;
+  }
+
+  .disabledDiv {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+</style>
+
+<!-- <div ng-init="vm.init()">
+  <div class="container">
+      <form>
+          <div class="mx-auto" style="width: 200px;">
+              <h5 class="modal-title">{{vm.tituloTela}}</h5>
+            </div>
+          <div class="form-group">
+              <label for="nomePerfil">Nome: </label>
+              <input type="nome" class="form-control" id="nomePerfil" ng-model="vm.perfil.nome" placeholder="Digite o nome da perfil ...">
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Descrição: </label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" ng-model="vm.perfil.descricao"></textarea>
+            </div>
+          <div class="row">
+              <div class="col">
+                  <div class="form-group">
+                      <label for="nascimentoPerfil">Data de Inclusão</label>
+                      <input type="text" class="form-control" id="nascimentoPerfil" ng-disabled="true" ng-model="vm.perfil.dataHoraInclusao">
+                    </div>
+              </div>
+              <div class="col">
+                <div class="form-group">
+                    <label for="nascimentoPerfil">Data de Alteração</label>
+                    <input type="text" class="form-control" id="nascimentoPerfil" ng-disabled="true" ng-model="vm.perfil.dataHoraAlteracao">
+                  </div>
+            </div>
+          </div>    
+            
+            <div class="row">
+              <button type="button" class="btn btn-primary" ng-click="vm.incluirAlterarPerfil(vm.perfil)">Salvar</button>
+              <button type="button" class="btn btn-danger" ng-click="vm.cancelar()">Cancelar</button>
+            </div>
+        </form>
+    
+
+  </div>
+</div> -->
+
+<!-- Inicializar, mostrar tabela -->
+<div ng-init="vm.init()">
+  <div
+    class="container"
+    style="overflow-y: auto; overflow-x: hidden; height: 425px"
+  >
+    <form>
+      <div class="mx-auto" style="width: 200px;">
+        <h5 class="modal-title">{{vm.tituloTela}}</h5>
+      </div>
+      <div class="form-group">
+        <label for="nomePerfil">Nome:</label>
+        <input 
+          type="nome"
+          class="form-control"
+          id="nomePerfil"
+          ng-model="vm.perfil.nome"
+          placeholder="Digite o nome do perfil ..."
+        >
+      </div>
+      <div class="form-group">
+        <label>Descrição:</label>
+        <textarea 
+          name="" 
+          id="" 
+          cols="30"
+          rows="4"
+          class=form-control
+          ng-model="vm.perfil.descricao"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label>Data de Inclusão</label>
+        <input 
+          ng-model="vm.perfil.dataHoraInclusao" 
+          ng-disabled="true" 
+          class="form-control">
+        </input>
+      </div>
+      <div class="form-group">
+        <label>Data de Alteração</label>
+        <input 
+          ng-model="vm.perfil.dataHoraAlteracao" 
+          ng-disabled="true" 
+          class="form-control">
+      </input>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Salvar e Cancelar -->
+<div
+  class="row"
+  style="float: right; padding-top: 30px; padding-right: 20px;"
+>
+  <button
+    type="button"
+    class="btn btn-primary btn-space"
+    ng-click="vm.incluirAlterarPerfil()"
+  >
+    Salvar
+  </button>
+  <button 
+    type="button" 
+    class="btn btn-danger" 
+    ng-click="vm.cancelar()"
+  >
+    Cancelar
+  </button>
+</div>
+
+<!-- <div
+  class="modal fade"
+  id="modalEndereco"
+  role="dialog"
+  data-backdrop="false"
+>
+  <div class="modal-dialog">
+     Modal content-->
+    <!-- <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div
+          ng-include="'app/spas/perfil/template/perfil-incluir-alterar.tpl.html'"
+        ></div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary btn-space"
+          data-dismiss="modal"
+        >
+          Salvar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          ng-click="vm.limparTela()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->
