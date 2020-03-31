@@ -75,6 +75,7 @@ function PessoaIncluirAlterarController(
                                     vm.pessoa = pessoaRetorno;
                                     vm.pessoa.dataNascimento = vm.formataDataTela(pessoaRetorno.dataNascimento);
                                     vm.perfil = vm.pessoa.perfils[0];
+                                    vm.marcarPerfilCheckBox();
                                 }
                             }
                         );
@@ -175,22 +176,22 @@ function PessoaIncluirAlterarController(
         objetoDados.enderecos = listaEndereco;
 
         // Se perfil existir
-        if (vm.perfil !== null) {
+        // if (vm.perfil !== null) {
 
-            var isNovoPerfil = true;
+        //     var isNovoPerfil = true;
             
-            // Para cada perfil que a pessoa tiver...
-            angular.forEach(objetoDados.perfils, function (value, key) {
-                // se algum dos perfis que a pessoa possui forem iguais ao selecionado, não é um novo perfil
-                if (value.id === vm.perfil.id) {
-                    isNovoPerfil = false;
-                }
-            });
+        //     // Para cada perfil que a pessoa tiver...
+        //     angular.forEach(objetoDados.perfils, function (value, key) {
+        //         // se algum dos perfis que a pessoa possui forem iguais ao selecionado, não é um novo perfil
+        //         if (value.id === vm.perfil.id) {
+        //             isNovoPerfil = false;
+        //         }
+        //     });
 
-            //  Se o perfil for novo para aquela pessoa, acrescente ele na lista de perfis dela
-            if (isNovoPerfil)
-                objetoDados.perfils.push(vm.perfil);
-        }
+        //     //  Se o perfil for novo para aquela pessoa, acrescente ele na lista de perfis dela
+        //     if (isNovoPerfil)
+        //         objetoDados.perfils.push(vm.perfil);
+        // }
 
         if (vm.acao == "Cadastrar") {
             vm.salvar(vm.urlPessoa, objetoDados).then(
@@ -366,6 +367,27 @@ function PessoaIncluirAlterarController(
                 }
             );
         }
+    }
+
+    vm.marcarPerfilCheckBox = function() {
+        vm.perfilCheckBox = {};
+        angular.forEach(vm.listaPerfil, function (perfil, i) {
+            vm.perfilCheckBox[i] = false;
+            angular.forEach(vm.pessoa.perfils, function (perfilPessoa, j) {
+                if (perfil.id === perfilPessoa.id) {
+                    vm.perfilCheckBox[i] = true;
+                }
+            })
+        })
+    }
+
+    vm.salvarPerfils = function() {
+        vm.pessoa.perfils = [];
+        angular.forEach(vm.listaPerfil, function(perfil, i) {
+            if (vm.perfilCheckBox[i] === true) {
+                vm.pessoa.perfils.push(perfil);
+            }
+        })
     }
 
 }

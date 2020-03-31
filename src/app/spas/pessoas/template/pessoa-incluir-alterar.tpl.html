@@ -109,11 +109,11 @@
               <th>Incluir/Remover</th>
             </tr>
           </thead>
-          <tbody ng-repeat="(index, perfil) in vm.pessoa.perfils">
+          <tbody ng-repeat="(index, perfil) in vm.listaPerfil">
             <tr>
               <td>{{perfil.nome}}</td>
               <td>{{perfil.descricao}}</td>
-              <td>under development</td>
+              <td><input type="checkbox" ng-model="vm.perfilCheckBox[$index]" ng-change="vm.salvarPerfils()"></td>
             </tr>
           </tbody>
         </table>
