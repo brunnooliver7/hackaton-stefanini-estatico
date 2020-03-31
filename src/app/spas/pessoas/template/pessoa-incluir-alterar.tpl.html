@@ -21,9 +21,13 @@
     style="overflow-y: auto; overflow-x: hidden; height: 425px"
   >
     <form>
+
+      <!-- Título -->
       <div class="mx-auto" style="width: 200px;">
         <h5 class="modal-title">{{vm.tituloTela}}</h5>
       </div>
+
+      <!-- Nome -->
       <div class="form-group">
         <label for="nomePessoa">Nome: </label>
         <input
@@ -34,6 +38,8 @@
           placeholder="Digite o nome da pessoa ..."
         />
       </div>
+
+      <!-- Email -->
       <div class="form-group">
         <label for="emailPessoa">Email</label>
         <input
@@ -44,7 +50,10 @@
           placeholder="name@example.com"
         />
       </div>
-      <div class="row">
+
+      <div class="row" style="padding-left: 15px;">
+
+        <!-- Data de Nascimento -->
         <div class="form-group">
           <label for="nascimentoPessoa" style="width: 250px;"
             >Data de nascimento</label
@@ -58,6 +67,8 @@
             style="width: 120px;"
           />
         </div>
+
+        <!-- Perfil -->
         <div class="form-group">
           <label for="nomePerfil">Perfil</label>
           <div>
@@ -71,8 +82,10 @@
             </select>
           </div>
         </div>
+
       </div>
 
+      <!-- Situação -->
       <div class="form-check">
         <input
           class="form-check-input"
@@ -85,10 +98,12 @@
           Situação
         </label>
       </div>
+
+      <!-- Lista de Endereços -->
       <div>
         <div style="text-align: right;">
           <img
-            src="../../../app/imagens/bootstrap-icons/icons/document-richtext.svg"
+            src="../../../app/imagens/bootstrap-icons/icons/plus.svg"
             style="cursor: pointer;"
             alt=""
             width="25"
@@ -107,7 +122,7 @@
               <th scope="col">Excluir</th>
             </tr>
           </thead>
-          <tbody ng-repeat="endereco in vm.pessoa.enderecos">
+          <tbody ng-repeat="(index, endereco) in vm.pessoa.enderecos">
             <tr>
               <td>{{endereco.localidade}}</td>
               <td>{{endereco.uf}}</td>
@@ -121,7 +136,7 @@
                   width="25"
                   height="25"
                   title="Editar"
-                  ng-click="vm.abrirModal(endereco)"
+                  ng-click="vm.abrirModal(index, endereco)"
                 />
               </td>
 
@@ -141,6 +156,7 @@
           </tbody>
         </table>
       </div>
+
     </form>
   </div>
   
@@ -162,12 +178,7 @@
   </div>
 
   <!-- Modal -->
-  <div 
-    class="modal fade" 
-    id="modalEndereco" 
-    role="dialog" 
-    data-backdrop="false"
-  >
+  <div class="modal fade" id="modalEndereco" role="dialog" data-backdrop="false">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -178,8 +189,25 @@
             ng-include="'app/spas/endereco/template/endereco-incluir-alterar.tpl.html'"
           ></div>
         </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary btn-space"
+            data-dismiss="modal"
+            ng-click="vm.salvarEndereco()"
+          >
+            Salvar
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            ng-click="vm.limparTela()"
+          >
+            Cancelar
+          </button>
+        </div>
       </div>
     </div>
   </div>
-  
+
 </div>

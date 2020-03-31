@@ -20,75 +20,93 @@
     style="overflow-y: auto; overflow-x: hidden; height: 425px"
   >
     <form>
+
+      <!-- Título -->
       <div class="mx-auto" style="width: 200px;">
-        <h5 class="modal-title">Editar Endereço</h5>
+        <h5 class="modal-title">{{vm.tituloModal}}</h5>
       </div>
+
+      <!-- CEP -->
       <div class="form-group">
         <label for="cepEndereco">CEP:</label>
         <input 
           type="nome"
           class="form-control"
           id="cepEndereco"
-          ng-model="vm.endereco.cep"
-          placeholder="Digite o CEP do endereço ..."
+          ng-model="vm.enderecoModal.cep"
+          ui-mask="99.999-999"
         >
       </div>
+
+      <!-- UF -->
       <div class="form-group">
         <label for="ufEndereco">UF:</label>
+        <!-- <select 
+          class="form-control"
+          id="ufEndereco"
+          ng-model="vm.enderecoModal.uf"
+          ng-options="ufItem.id for ufItem in vm.listaUF"
+          style="width: 100px;"
+          >
+        </select> -->
         <input 
           type="nome"
           class="form-control"
           id="ufEndereco"
-          ng-model="vm.endereco.uf"
-          placeholder="Digite o UF do endereço ..."
+          ng-model="vm.enderecoModal.uf"
         >
       </div>
+
+      <!-- Localidade -->
       <div class="form-group">
         <label for="localidadeEndereco">Localidade:</label>
         <input 
           type="nome"
           class="form-control"
           id="localidadeEndereco"
-          ng-model="vm.endereco.localidade"
-          placeholder="Digite o Localidade do endereço ..."
+          ng-model="vm.enderecoModal.localidade"
         >
       </div>
+
+      <!-- Bairro -->
       <div class="form-group">
         <label for="nomeEndereco">Bairro:</label>
         <input 
           type="nome"
           class="form-control"
           id="bairroEndereco"
-          ng-model="vm.endereco.bairro"
-          placeholder="Digite o Bairro do endereço ..."
+          ng-model="vm.enderecoModal.bairro"
         >
       </div>
+
+      <!-- Complemento -->
       <div class="form-group">
         <label for="complementoEndereco">Complemento:</label>
         <input 
           type="nome"
           class="form-control"
           id="complementoEndereco"
-          ng-model="vm.endereco.complemento"
-          placeholder="Digite o Complemento do endereço ..."
+          ng-model="vm.enderecoModal.complemento"
         >
       </div>
+
+      <!-- Logradouro -->
       <div class="form-group">
         <label for="nomeEndereco">Logradouro:</label>
         <input 
           type="nome"
           class="form-control"
           id="logradouroEndereco"
-          ng-model="vm.endereco.logradouro"
-          placeholder="Digite o Logradouro do endereço ..."
+          ng-model="vm.enderecoModal.logradouro"
         >
       </div>
+
     </form>
   </div>
 </div>
 
 <!-- Salvar e Cancelar -->
-<div
+<!-- <div
   class="row"
   style="float: right; padding-top: 30px; padding-right: 20px;"
 >
@@ -106,4 +124,4 @@
   >
     Cancelar
   </button>
-</div>
+</div> -->
