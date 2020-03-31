@@ -17,7 +17,10 @@
                 },
                 incluir: function (url, data) {
                     return $http.post(url, data).then(tratarResposta, tratarErro);
-                }          
+                },
+                consultarCep: function (url) {
+                    return $http.get(url).then(tratarResposta, tratarErro);
+                }
             };
 
             /**METODOS TRATAMENTO ERROS */

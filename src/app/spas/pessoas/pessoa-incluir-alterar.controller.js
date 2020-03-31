@@ -6,7 +6,8 @@ PessoaIncluirAlterarController.$inject = [
     "$q",
     "$filter",
     "$routeParams",
-    "HackatonStefaniniService"];
+    "HackatonStefaniniService",
+];
 
 function PessoaIncluirAlterarController(
     $rootScope,
@@ -233,20 +234,18 @@ function PessoaIncluirAlterarController(
     }
 
     vm.remover = function (objeto, tipo) {
-
         var url = vm.urlPessoa + objeto.id;
         if (tipo === "ENDERECO")
             url = vm.urlEndereco + objeto.id;
 
         vm.excluir(url).then(
-            function (ojetoRetorno) {
+            function (objetoRetorno) {
                 vm.retornarTelaListagem();
             }
         );
     };
 
     vm.excluir = function (url, objeto) {
-
         var deferred = $q.defer();
         HackatonStefaniniService.excluir(url).then(
             function (response) {
@@ -261,15 +260,7 @@ function PessoaIncluirAlterarController(
     vm.formataDataJava = function (data) {
         var dia = data.slice(0, 2);
         var mes = data.slice(2, 4);
-        var ano = data.slice(4, 8);
-                
-        // var date = ano + "-" + mes + "-" + dia;
-        // date = toString(date);
-        // date = date.toString();
-        // console.log(date);
-        // console.log(typeof(date));
-        // return date;
-
+        var ano = data.slice(4, 8);                
         return ano + "-" + mes + "-" + dia;
     };
 
@@ -277,12 +268,6 @@ function PessoaIncluirAlterarController(
         var ano = data.slice(0, 4);
         var mes = data.slice(5, 7);
         var dia = data.slice(8, 10);
-
-        // var date = dia + mes + ano;
-        // date = toString(date);
-        // date = date.toString();
-        // return date;
-
         return dia + mes + ano;
     };
 
@@ -328,8 +313,8 @@ function PessoaIncluirAlterarController(
         var endereco = JSON.stringify(vm.enderecoModal);
         HackatonStefaniniService.alterar(vm.urlEndereco, endereco).then(
             function (response) {
-                console.log(response);
                 vm.pessoa.enderecos[vm.indexEndereco] = response.data;
+                vm.limparEndereco();
             }
         )
     }
@@ -338,11 +323,49 @@ function PessoaIncluirAlterarController(
         HackatonStefaniniService.incluir(vm.urlEndereco, vm.enderecoModal).then(
             function (response) {
                 if (response.status == 200) {
-                    vm.enderecoModal = response.data;
-                    vm.pessoa.enderecos.push(vm.enderecoModal);
+                    vm.pessoa.enderecos.push(response.data);
+                    vm.limparEndereco();
                 }
             }
         );    
+    }
+
+    vm.limparEndereco = function () {
+
+        vm.enderecoEditar.id = null,
+        vm.enderecoEditar.idPessoa = null,
+        vm.enderecoEditar.cep = "",
+        vm.enderecoEditar.uf = "",
+        vm.enderecoEditar.localidade = "",
+        vm.enderecoEditar.bairro = "",
+        vm.enderecoEditar.logradouro = "",
+        vm.enderecoEditar.complemento = ""
+
+        vm.enderecoCriar.idPessoa = null,
+        vm.enderecoCriar.cep = "",
+        vm.enderecoCriar.uf = "",
+        vm.enderecoCriar.localidade = "",
+        vm.enderecoCriar.bairro = "",
+        vm.enderecoCriar.logradouro = "",
+        vm.enderecoCriar.complemento = ""
+
+    }
+
+    vm.buscarCep = function() {
+        vm.urlCep = 'https://viacep.com.br/ws/';
+        vm.urlCep = vm.urlCep.concat(vm.enderecoModal.cep);
+        vm.urlCep = vm.urlCep.concat('/json/');
+        if (vm.enderecoModal.cep.length == 8) {
+            HackatonStefaniniService.consultarCep(vm.urlCep).then(
+                function (response) {
+                    vm.enderecoModal.uf = response.data.uf
+                    vm.enderecoModal.localidade = response.data.localidade
+                    vm.enderecoModal.bairro = response.data.bairro
+                    vm.enderecoModal.logradouro = response.data.logradouro
+                    vm.enderecoModal.complemento = response.data.complemento            
+                }
+            );
+        }
     }
 
 }

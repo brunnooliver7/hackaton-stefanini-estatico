@@ -69,7 +69,7 @@
         </div>
 
         <!-- Perfil -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="nomePerfil">Perfil</label>
           <div>
             <select
@@ -81,12 +81,12 @@
               <option value="">-- PERFIL --</option>
             </select>
           </div>
-        </div>
+        </div> -->
 
       </div>
 
       <!-- Situação -->
-      <div class="form-check">
+      <div class="form-check" style="margin-bottom: 20px;">
         <input
           class="form-check-input"
           ng-checked="vm.pessoa.situacao"
@@ -97,6 +97,26 @@
         <label class="form-check-label" for="defaultCheck1">
           Situação
         </label>
+      </div>
+
+      <!-- Perfil -->
+      <div>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Incluir/Remover</th>
+            </tr>
+          </thead>
+          <tbody ng-repeat="(index, perfil) in vm.pessoa.perfils">
+            <tr>
+              <td>{{perfil.nome}}</td>
+              <td>{{perfil.descricao}}</td>
+              <td>under development</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <!-- Lista de Endereços -->

@@ -35,6 +35,7 @@
           id="cepEndereco"
           ng-model="vm.enderecoModal.cep"
           ui-mask="99.999-999"
+          ng-change="vm.buscarCep()"
         >
       </div>
 
@@ -104,24 +105,3 @@
     </form>
   </div>
 </div>
-
-<!-- Salvar e Cancelar -->
-<!-- <div
-  class="row"
-  style="float: right; padding-top: 30px; padding-right: 20px;"
->
-  <button
-    type="button"
-    class="btn btn-primary btn-space"
-    ng-click="vm.incluir(vm.endereco)"
-  >
-    Salvar
-  </button>
-  <button 
-    type="button" 
-    class="btn btn-danger" 
-    ng-click="vm.cancelar()"
-  >
-    Cancelar
-  </button>
-</div> -->
