@@ -51,6 +51,8 @@ function PessoaIncluirAlterarController(
         complemento: ""
     };
 
+    vm.mostrarSalvarBtn = true;
+
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
     vm.urlPerfil = "http://localhost:8080/treinamento/api/perfils/";
     vm.urlPessoa = "http://localhost:8080/treinamento/api/pessoas/";
@@ -142,8 +144,8 @@ function PessoaIncluirAlterarController(
             vm.enderecoModal.idPessoa = vm.pessoa.id;
         }
 
-        if (vm.pessoa.enderecos.length === 0)
-            vm.pessoa.enderecos.push(vm.enderecoModal);
+        // if (vm.pessoa.enderecos.length === 0)
+        //     vm.pessoa.enderecos.push(vm.enderecoModal);
 
         $("#modalEndereco").modal();
     };
@@ -241,7 +243,7 @@ function PessoaIncluirAlterarController(
 
         vm.excluir(url).then(
             function (objetoRetorno) {
-                vm.retornarTelaListagem();
+                location.reload();
             }
         );
     };
@@ -328,7 +330,7 @@ function PessoaIncluirAlterarController(
                     vm.limparEndereco();
                 }
             }
-        );    
+        );  
     }
 
     vm.limparEndereco = function () {
@@ -353,17 +355,18 @@ function PessoaIncluirAlterarController(
     }
 
     vm.buscarCep = function() {
-        vm.urlCep = 'https://viacep.com.br/ws/';
-        vm.urlCep = vm.urlCep.concat(vm.enderecoModal.cep);
-        vm.urlCep = vm.urlCep.concat('/json/');
+        var data = {
+            cep: vm.enderecoModal.cep,
+        }
         if (vm.enderecoModal.cep.length == 8) {
-            HackatonStefaniniService.consultarCep(vm.urlCep).then(
+            HackatonStefaniniService.consultarCep(vm.urlEndereco + 'buscarCep', data).then(
                 function (response) {
                     vm.enderecoModal.uf = response.data.uf
                     vm.enderecoModal.localidade = response.data.localidade
                     vm.enderecoModal.bairro = response.data.bairro
                     vm.enderecoModal.logradouro = response.data.logradouro
-                    vm.enderecoModal.complemento = response.data.complemento            
+                    vm.enderecoModal.complemento = response.data.complemento   
+                    vm.enderecoModal.idPessoa = vm.pessoa.id;
                 }
             );
         }
@@ -388,6 +391,13 @@ function PessoaIncluirAlterarController(
                 vm.pessoa.perfils.push(perfil);
             }
         })
+    }
+
+    vm.mostrarSalvar = function() {
+        vm.mostrarSalvarBtn = true
+        if (vm.enderecoModal.complemento !== null) { 
+            vm.mostrarSalvarBtn = false;
+        }
     }
 
 }

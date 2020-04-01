@@ -113,7 +113,15 @@
             <tr>
               <td>{{perfil.nome}}</td>
               <td>{{perfil.descricao}}</td>
-              <td><input type="checkbox" ng-model="vm.perfilCheckBox[$index]" ng-change="vm.salvarPerfils()"></td>
+              <td>
+                <input 
+                  type="checkbox" 
+                  ng-model="vm.perfilCheckBox[$index]" 
+                  ng-change="vm.salvarPerfils()" 
+                  class="form-check" 
+                  style="text-align: center;"
+                >
+              </td>
             </tr>
           </tbody>
         </table>
@@ -215,6 +223,7 @@
             class="btn btn-primary btn-space"
             data-dismiss="modal"
             ng-click="vm.salvarEndereco()"
+            ng-disabled="vm.mostrarSalvarBtn"
           >
             Salvar
           </button>
