@@ -99,8 +99,13 @@
         </label>
       </div>
 
+      <!-- Imagem -->
+      <div class="form-group">
+        <input type="file" ng-model="vm.pessoa.imagem">
+      </div>
+
       <!-- Perfil -->
-      <div>
+      <div ng-if="vm.acao==='Editar'">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -127,8 +132,8 @@
         </table>
       </div>
 
-      <!-- Lista de Endereços -->
-      <div>
+      <!-- Endereço -->
+      <div ng-if="vm.acao==='Editar'">
         <div style="text-align: right;">
           <img
             src="../../../app/imagens/bootstrap-icons/icons/plus.svg"
@@ -177,12 +182,17 @@
                   width="25"
                   height="25"
                   title="Excluir"
-                  ng-click="vm.remover(endereco, 'ENDERECO')"
+                  ng-click="vm.removerEndereco(endereco, 'ENDERECO')"
                 />
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Mensagem -->
+      <div ng-if="vm.acao==='Cadastrar'">
+        <div>Após cadastrar uma nova pessoa, adicione novos endereços e perfis a ela</div>
       </div>
 
     </form>
@@ -223,7 +233,7 @@
             class="btn btn-primary btn-space"
             data-dismiss="modal"
             ng-click="vm.salvarEndereco()"
-            ng-disabled="vm.mostrarSalvarBtn"
+            ng-disabled="vm.habilitarSalvarBtn"
           >
             Salvar
           </button>

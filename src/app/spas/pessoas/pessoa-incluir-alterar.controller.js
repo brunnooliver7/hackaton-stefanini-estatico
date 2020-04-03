@@ -27,7 +27,8 @@ function PessoaIncluirAlterarController(
         dataNascimento: null,
         enderecos: [],
         perfils: [],
-        situacao: false
+        situacao: false,
+        imagem: null
     };
 
     vm.enderecoEditar = {
@@ -50,8 +51,6 @@ function PessoaIncluirAlterarController(
         logradouro: "",
         complemento: ""
     };
-
-    vm.mostrarSalvarBtn = true;
 
     vm.urlEndereco = "http://localhost:8080/treinamento/api/enderecos/";
     vm.urlPerfil = "http://localhost:8080/treinamento/api/perfils/";
@@ -87,6 +86,8 @@ function PessoaIncluirAlterarController(
         );
     };
 
+// ----------------------- SERVIÇO ----------------------- //
+
     vm.listar = function (url) {
         var deferred = $q.defer();
         HackatonStefaniniService.listar(url).then(
@@ -112,50 +113,49 @@ function PessoaIncluirAlterarController(
         return deferred.promise;
     };
 
-    vm.cancelar = function () {
-        vm.retornarTelaListagem();
-    };
+    vm.salvar = function (url, objeto) {
+        var deferred = $q.defer();
+        var obj = JSON.stringify(objeto);
+        HackatonStefaniniService.incluir(url, obj).then(
+            function (response) {
+                if (response.status == 200) {
+                    deferred.resolve(response.data);
+                }
+            }
+        );
+        return deferred.promise;
+    }
 
-    vm.retornarTelaListagem = function () {
-        $location.path("listarPessoas");
-    };
+    vm.alterar = function (url, objeto) {
+        var deferred = $q.defer();
+        var obj = JSON.stringify(objeto);
+        HackatonStefaniniService.alterar(url, obj).then(
+            function (response) {
+                if (response.status == 200) {
+                    deferred.resolve(response.data);
+                }
+            }
+        );
+        return deferred.promise;
+    }
 
-    vm.abrirModal = function (index, endereco) {
+    vm.excluir = function (url, objeto) {
+        var deferred = $q.defer();
+        HackatonStefaniniService.excluir(url).then(
+            function (response) {
+                if (response.status == 200) {
+                    deferred.resolve(response.data);
+                }
+            }
+        );
+        return deferred.promise;
+    }
 
-        vm.enderecoModal = vm.enderecoEditar;
-
-        if (index !== undefined) {
-            vm.indexEndereco = index;
-        }
-
-        if (endereco !== undefined && vm.acao === "Editar") {
-            vm.tituloModal = "Editar Endereço";
-            vm.enderecoModal.id = endereco.id;
-            vm.enderecoModal.idPessoa = endereco.idPessoa;
-            vm.enderecoModal.cep = endereco.cep;
-            vm.enderecoModal.uf = endereco.uf;
-            vm.enderecoModal.localidade = endereco.localidade;
-            vm.enderecoModal.bairro = endereco.bairro;
-            vm.enderecoModal.logradouro = endereco.logradouro;
-            vm.enderecoModal.complemento = endereco.complemento;
-        } else {
-            vm.tituloModal = "Cadastrar Endereço";
-            vm.enderecoModal = vm.enderecoCriar;
-            vm.enderecoModal.idPessoa = vm.pessoa.id;
-        }
-
-        // if (vm.pessoa.enderecos.length === 0)
-        //     vm.pessoa.enderecos.push(vm.enderecoModal);
-
-        $("#modalEndereco").modal();
-    };
-
-    vm.limparTela = function () {
-        $("#modalEndereco").modal("toggle");
-        vm.endereco = undefined;
-    };
+// ----------------------- AUXILIARES ----------------------- //
 
     vm.incluir = function () {
+
+        console.log(vm.pessoa)
 
         // Formatar data nascimento de 'pessoa'
         vm.pessoa.dataNascimento = vm.formataDataJava(vm.pessoa.dataNascimento);
@@ -210,55 +210,13 @@ function PessoaIncluirAlterarController(
         }
     };
 
-    vm.salvar = function (url, objeto) {
-        var deferred = $q.defer();
-        var obj = JSON.stringify(objeto);
-        HackatonStefaniniService.incluir(url, obj).then(
-            function (response) {
-                if (response.status == 200) {
-                    deferred.resolve(response.data);
-                }
-            }
-        );
-        return deferred.promise;
-    }
-
-    vm.alterar = function (url, objeto) {
-        var deferred = $q.defer();
-        var obj = JSON.stringify(objeto);
-        HackatonStefaniniService.alterar(url, obj).then(
-            function (response) {
-                if (response.status == 200) {
-                    deferred.resolve(response.data);
-                }
-            }
-        );
-        return deferred.promise;
-    }
-
-    vm.remover = function (objeto, tipo) {
-        var url = vm.urlPessoa + objeto.id;
-        if (tipo === "ENDERECO")
-            url = vm.urlEndereco + objeto.id;
-
-        vm.excluir(url).then(
-            function (objetoRetorno) {
-                location.reload();
-            }
-        );
+    vm.retornarTelaListagem = function () {
+        $location.path("listarPessoas");
     };
 
-    vm.excluir = function (url, objeto) {
-        var deferred = $q.defer();
-        HackatonStefaniniService.excluir(url).then(
-            function (response) {
-                if (response.status == 200) {
-                    deferred.resolve(response.data);
-                }
-            }
-        );
-        return deferred.promise;
-    }
+    vm.cancelar = function () {
+        vm.retornarTelaListagem();
+    };
 
     vm.formataDataJava = function (data) {
         var dia = data.slice(0, 2);
@@ -272,6 +230,44 @@ function PessoaIncluirAlterarController(
         var mes = data.slice(5, 7);
         var dia = data.slice(8, 10);
         return dia + mes + ano;
+    };
+
+// ------------------------- ENDERECO ------------------------- //
+
+    vm.abrirModal = function (index, endereco) {
+
+        vm.enderecoModal = vm.enderecoEditar;
+
+        // index da lista de enderecos da pessoa
+        if (index !== undefined) {
+            vm.indexEndereco = index;
+        }
+
+        if (endereco && vm.acao === "Editar") {
+            vm.tituloModal = "Editar Endereço";
+            vm.enderecoModal.id = endereco.id;
+            vm.enderecoModal.idPessoa = endereco.idPessoa;
+            vm.enderecoModal.cep = endereco.cep;
+            vm.enderecoModal.uf = endereco.uf;
+            vm.enderecoModal.localidade = endereco.localidade;
+            vm.enderecoModal.bairro = endereco.bairro;
+            vm.enderecoModal.logradouro = endereco.logradouro;
+            vm.enderecoModal.complemento = endereco.complemento;
+        } else {
+            vm.tituloModal = "Cadastrar Endereço";
+            vm.enderecoModal = vm.enderecoCriar;
+            vm.enderecoModal.idPessoa = vm.pessoa.id;
+        }
+
+        // if (vm.pessoa.enderecos.length === 0)
+        //     vm.pessoa.enderecos.push(vm.enderecoModal);
+
+        $("#modalEndereco").modal();
+    };
+
+    vm.limparTela = function () {
+        $("#modalEndereco").modal("toggle");
+        vm.endereco = undefined;
     };
 
     vm.listaUF = [
@@ -323,6 +319,14 @@ function PessoaIncluirAlterarController(
     }
 
     vm.incluirEndereco = function() {
+        // vm.pessoa.enderecos.push(response.data);
+        // vm.limparEndereco();
+        // HackatonStefaniniService.incluir(vm.urlEndereco, vm.enderecoModal).then(
+        //     function (response) {
+        //         if (response.status == 200) {
+        //         }
+        //     }
+        // );  
         HackatonStefaniniService.incluir(vm.urlEndereco, vm.enderecoModal).then(
             function (response) {
                 if (response.status == 200) {
@@ -332,6 +336,18 @@ function PessoaIncluirAlterarController(
             }
         );  
     }
+
+    vm.removerEndereco = function (objeto, tipo) {
+        var url = vm.urlPessoa + objeto.id;
+        if (tipo === "ENDERECO")
+            url = vm.urlEndereco + objeto.id;
+
+        vm.excluir(url).then(
+            function (objetoRetorno) {
+                vm.init();
+            }
+        );
+    };
 
     vm.limparEndereco = function () {
 
@@ -372,6 +388,15 @@ function PessoaIncluirAlterarController(
         }
     }
 
+    vm.habilitarSalvar = function() {
+        vm.habilitarSalvarBtn = true
+        if (vm.enderecoModal.complemento) { 
+            vm.habilitarSalvarBtn = false;
+        }
+    }
+
+// ------------------------- PERFIL ------------------------- //
+
     vm.marcarPerfilCheckBox = function() {
         vm.perfilCheckBox = {};
         angular.forEach(vm.listaPerfil, function (perfil, i) {
@@ -391,13 +416,6 @@ function PessoaIncluirAlterarController(
                 vm.pessoa.perfils.push(perfil);
             }
         })
-    }
-
-    vm.mostrarSalvar = function() {
-        vm.mostrarSalvarBtn = true
-        if (vm.enderecoModal.complemento !== null) { 
-            vm.mostrarSalvarBtn = false;
-        }
     }
 
 }
