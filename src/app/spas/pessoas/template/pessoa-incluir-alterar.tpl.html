@@ -101,11 +101,14 @@
 
       <!-- Imagem -->
       <div class="form-group">
+        <div>
+          
+        </div>
         <input type="file" ng-model="vm.pessoa.imagem">
       </div>
 
       <!-- Perfil -->
-      <div ng-if="vm.acao==='Editar'">
+      <div>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -133,7 +136,7 @@
       </div>
 
       <!-- Endereço -->
-      <div ng-if="vm.acao==='Editar'">
+      <div>
         <div style="text-align: right;">
           <img
             src="../../../app/imagens/bootstrap-icons/icons/plus.svg"
@@ -155,7 +158,7 @@
               <th scope="col">Excluir</th>
             </tr>
           </thead>
-          <tbody ng-repeat="(index, endereco) in vm.pessoa.enderecos">
+          <tbody ng-repeat="(index, endereco) in vm.enderecos">
             <tr>
               <td>{{endereco.localidade}}</td>
               <td>{{endereco.uf}}</td>
@@ -172,7 +175,6 @@
                   ng-click="vm.abrirModal(index, endereco)"
                 />
               </td>
-
               <td>
                 <img
                   ng-class="{'disabledDiv': endereco.id === null}"
@@ -190,10 +192,10 @@
         </table>
       </div>
 
-      <!-- Mensagem -->
+      <!-- Mensagem
       <div ng-if="vm.acao==='Cadastrar'">
         <div>Após cadastrar uma nova pessoa, adicione novos endereços e perfis a ela</div>
-      </div>
+      </div> -->
 
     </form>
   </div>

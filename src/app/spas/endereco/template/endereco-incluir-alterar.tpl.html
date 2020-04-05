@@ -42,19 +42,12 @@
       <!-- UF -->
       <div class="form-group">
         <label for="ufEndereco">UF:</label>
-        <!-- <select 
-          class="form-control"
-          id="ufEndereco"
-          ng-model="vm.enderecoModal.uf"
-          ng-options="ufItem.id for ufItem in vm.listaUF"
-          style="width: 100px;"
-          >
-        </select> -->
         <input 
           type="nome"
           class="form-control"
           id="ufEndereco"
           ng-model="vm.enderecoModal.uf"
+          ng-disabled="true"
         >
       </div>
 
@@ -66,6 +59,7 @@
           class="form-control"
           id="localidadeEndereco"
           ng-model="vm.enderecoModal.localidade"
+          ng-disabled="true"
         >
       </div>
 
@@ -77,6 +71,19 @@
           class="form-control"
           id="bairroEndereco"
           ng-model="vm.enderecoModal.bairro"
+          ng-disabled="true"
+        >
+      </div>
+
+      <!-- Logradouro -->
+      <div class="form-group">
+        <label for="nomeEndereco">Logradouro:</label>
+        <input 
+          type="nome"
+          class="form-control"
+          id="logradouroEndereco"
+          ng-model="vm.enderecoModal.logradouro"
+          ng-disabled="true"
         >
       </div>
 
@@ -91,18 +98,7 @@
           ng-change="vm.habilitarSalvar()"
         >
       </div>
-
-      <!-- Logradouro -->
-      <div class="form-group">
-        <label for="nomeEndereco">Logradouro:</label>
-        <input 
-          type="nome"
-          class="form-control"
-          id="logradouroEndereco"
-          ng-model="vm.enderecoModal.logradouro"
-        >
-      </div>
-
+            
     </form>
   </div>
 </div>
